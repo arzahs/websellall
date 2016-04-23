@@ -1,8 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sergey
- * Date: 23.04.16
- * Time: 14:21
- */
-echo "index php file";
+
+
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
+require_once("helpers/Router.php");
+require_once("helpers/Db.php");
+session_start();
+
+$router = new Router();
+$router->run();
