@@ -10,6 +10,7 @@ class Category
         while($row = $result->fetch()){
             $categoryItems[$i]['id'] = $row['id'];
             $categoryItems[$i]['name'] = $row['name'];
+            $categoryItems[$i]['image'] = $row['image'];
             $i++;
         }
         return $categoryItems;
@@ -26,5 +27,7 @@ class Category
             return $category;
         }
     }
+
+
 
 }

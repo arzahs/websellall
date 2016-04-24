@@ -1,5 +1,7 @@
 <?php
 
+
+require_once $_SERVER['DOCUMENT_ROOT'].'/models/User.php';
 class Article
 {
     //getOneById
@@ -19,20 +21,27 @@ class Article
     }
     //getAllByTag
 
-    public static function getAllByTag($tagId = 1, $page = 1){
-        $tagId = intval($tagId);
+    public static function getAllByTag($tagId, $page = 1){
+        //$tagId = intval($tagId);
         $offset = ($page-1)*SHOW_BY_DEFAULT;
         $db = Db::getConnection();
-        $result = $db->query('SELECT * FROM article, tag
-            WHERE tag.id='.$tagId.' AND article.id=tag.article_id
-            ORDER BY article.id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset);
+        //получить имя тэга
+        $tagName = $db->query("SELECT name FROM tag WHERE id=".$tagId);
+        $tagName->setFetchMode(PDO::FETCH_ASSOC);
+        $name = $tagName->fetch();
+        $query = 'SELECT * FROM article, tag
+            WHERE tag.name=\''.$name['name'].'\' AND article.id=tag.article_id
+            ORDER BY article.id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset;
+        $result = $db->query($query);
         $i =0;
         while($row=$result->fetch()){
             $articleItems[$i]['id'] = $row['id'];
             $articleItems[$i]['title'] = $row['title'];
             $articleItems[$i]['author'] = $row['author'];
+            $articleItems[$i]['price'] = $row['price'];
             $articleItems[$i]['text'] = $row['text'];
             $articleItems[$i]['status'] = $row['status'];
+            $articleItems[$i]['image'] = $row['image'];
             $i++;
 
         }
@@ -41,20 +50,31 @@ class Article
     }
 
     //getAllByCategory
-    public static function getAllByCategory($categoryId = 1, $page = 1){
+    public static function getAllByCategory($categoryId = 0, $page = 1){
         $categoryId = intval($categoryId);
         $offset = ($page-1)*SHOW_BY_DEFAULT;
         $db = Db::getConnection();
-        $result = $db->query('SELECT * FROM article, category, tag
+        if($categoryId == 0){
+            $query = 'SELECT *
+                      FROM article ORDER BY id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset;
+        }
+        else{
+            $query = 'SELECT article.id, article.title, article.author, article.text, article.image, article.status, article.price, article.date FROM article, category, tag
             WHERE category.id='.$categoryId.' AND article.id=tag.article_id AND category.id = tag.category_id
-            ORDER BY article.id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset);
+            ORDER BY article.id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset;
+        }
+        $result = $db->query($query);
         $i =0;
         while($row=$result->fetch()){
             $articleItems[$i]['id'] = $row['id'];
             $articleItems[$i]['title'] = $row['title'];
             $articleItems[$i]['author'] = $row['author'];
+            $articleItems[$i]['author_name'] = User::getNameById(intval($row['author']));
             $articleItems[$i]['text'] = $row['text'];
             $articleItems[$i]['status'] = $row['status'];
+            $articleItems[$i]['price'] = $row['price'];
+            $articleItems[$i]['image'] = $row['image'];
+            $articleItems[$i]['date'] = $row['date'];
             $i++;
 
         }
@@ -66,7 +86,7 @@ class Article
         $page = intval($page);
         $db = Db::getConnection();
         $offset = ($page-1)*SHOW_BY_DEFAULT;
-        $result = $db->query('SELECT id, title, text, author
+        $result = $db->query('SELECT *
                       FROM article ORDER BY id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset);
         $i =0;
         while($row=$result->fetch()){
@@ -75,6 +95,8 @@ class Article
             $articleItems[$i]['author'] = $row['author'];
             $articleItems[$i]['text'] = $row['text'];
             $articleItems[$i]['status'] = $row['status'];
+            $articleItems[$i]['price'] = $row['price'];
+            $articleItems[$i]['image'] = $row['image'];
             $i++;
 
         }
