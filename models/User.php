@@ -42,17 +42,17 @@ class User
 
 
 
-    public static function register($firstName, $lastName, $login, $password, $email){
+    public static function register($firstName, $lastName, $password, $email, $phone){
         $db = Db::getConnection();
         $password = md5($password);
-        $sql = 'INSERT INTO user(first_name, last_name, login, password, email)
-                VALUES (:first_name, :last_name, :login, :password, :email)';
+        $sql = 'INSERT INTO user(first_name, last_name, password_hash, email, phone)
+                VALUES (:first_name, :last_name, :password_hash, :email, :phone)';
         $result = $db->prepare($sql);
         $result->bindParam(':first_name', $firstName, PDO::PARAM_STR);
         $result->bindParam(':last_name', $lastName, PDO::PARAM_STR);
-        $result->bindParam(':login', $login, PDO::PARAM_STR);
-        $result->bindParam(':password', $password, PDO::PARAM_STR);
+        $result->bindParam(':password_hash', $password, PDO::PARAM_STR);
         $result->bindParam(':email', $email, PDO::PARAM_STR);
+        $result->bindParam(':phone', $phone, PDO::PARAM_STR);
         return $result->execute();
     }
 
@@ -60,6 +60,7 @@ class User
     public static function auth($userId){
         $_SESSION['is_auth'] = md5($userId);
         $_SESSION["user"] = $userId;
+        header("Location: /");
     }
 
 
@@ -116,12 +117,13 @@ class User
         }
         return false;
     }
-    public static function checkUserExist($login, $password){
+    public static function checkUserExist($email, $password){
         $db = Db::getConnection();
         $password = md5($password);
-        $sql = 'SELECT * FROM user WHERE login=:login AND password=:password';
+        var_dump($password);
+        $sql = 'SELECT * FROM user WHERE email=:email AND password_hash=:password';
         $result = $db->prepare($sql);
-        $result->bindParam(':login', $login, PDO::PARAM_STR);
+        $result->bindParam(':email', $email, PDO::PARAM_STR);
         $result->bindParam(':password', $password, PDO::PARAM_STR);
         $result->execute();
         $user = $result->fetch();

@@ -39,6 +39,7 @@
         </div>
     </div>
 </div>
+<?php if(!isset($hide_baner)): ?>
 <div class="<?php if(isset($main_banner)){echo "main-banner";} ?> banner text-center">
     <div class="container">
         <h1>Продавай или покупай   <span class="segment-heading">  все online </span> вместе WillSellAll</h1>
@@ -46,3 +47,4 @@
         <a href="post-ad.html">Создать бесплатное объявление</a>
     </div>
 </div>
+<?php endif ?>
