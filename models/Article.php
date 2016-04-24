@@ -1,11 +1,7 @@
 <?php
 
-
-
 class Article
 {
-
-
     //getOneById
     public static function getOneById($id){
         $id = intval($id);
