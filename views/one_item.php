@@ -50,8 +50,8 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="itemtype">
-                            <p class="p-price">Item Type</p>
-                            <h4>Phones</h4>
+                            <p class="p-price">Количество</p>
+                            <h4><?php echo $article['count']; ?></h4>
                             <div class="clearfix"></div>
                         </div>
                     </div>
