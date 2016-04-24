@@ -23,8 +23,8 @@ class Tag
     public static function getAllByArticleId($id = 0){
         $id = intval($id);
         $db = Db::getConnection();
-        $result = $db->query('SELECT id, name
-                      FROM article WHERE article_id='.$id.' ORDER BY id');
+        $result = $db->query('SELECT *
+                      FROM tag WHERE article_id='.$id.' ORDER BY id');
         $i =0;
         while($row=$result->fetch()){
             $tagItems[$i]['id'] = $row['id'];

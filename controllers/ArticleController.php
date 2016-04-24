@@ -3,6 +3,7 @@
 
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/Article.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/Category.php';
+include_once $_SERVER['DOCUMENT_ROOT']."/models/Tag.php";
 class ArticleController
 {
     public function actionTest(){
@@ -12,8 +13,13 @@ class ArticleController
 
     public function actionOne($id = 1){
         $article = Article::getOneById($id);
-        echo "Article Controller actionOne method";
-        print_r($article);
+        $author = User::getOneById(intval($article['author']));
+        $tags = Tag::getAllByArticleId($id);
+        $view = new View();
+        $view->assign('tags',$tags);
+        $view->assign('author', $author);
+        $view->assign('article', $article);
+        $view->display("one_item.php");
         return true;
     }
 
@@ -50,6 +56,7 @@ class ArticleController
         $articles = Article::getAll($page = 1);
         $categories = Category::getAll();
         $view = new View();
+        $view->assign('main_banner', true);
         $view->assign('categories', $categories);
         $view->assign('articles', $articles);
         $view->display("index.php");

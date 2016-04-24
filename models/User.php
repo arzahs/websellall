@@ -28,6 +28,7 @@ class User
         $result = $db->query('SELECT * FROM user WHERE id='.$id);
         $result->setFetchMode(PDO::FETCH_ASSOC);
         $user = $result->fetch();
+        $user['name'] = $user['first_name'].' '.$user['last_name'];
         return $user;
     }
     static function getNameById($id = 1){

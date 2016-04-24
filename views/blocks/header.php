@@ -32,14 +32,14 @@
 <div class="header">
     <div class="container">
         <div class="logo">
-            <a href="index.html">Will<span>Sell</span>All</a>
+            <a href="/">Will<span>Sell</span>All</a>
         </div>
         <div class="header-right">
-            <a class="account" href="login.html">Мой кабинет</a>
+            <a class="account" href="user/login">Мой кабинет</a>
         </div>
     </div>
 </div>
-<div class="main-banner banner text-center">
+<div class="<?php if(isset($main_banner)){echo "main-banner";} ?> banner text-center">
     <div class="container">
         <h1>Продавай или покупай   <span class="segment-heading">  все online </span> вместе WillSellAll</h1>
         <p>Бесплатные online объявления на WillSellAll.com - здесь вы найдете то, что искали</p>

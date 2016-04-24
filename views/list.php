@@ -24,20 +24,20 @@
                                 <div>
                                     <div id="container">
 <!--                                        Сортировка-->
-                                        <div class="sort">
-                                            <div class="sort-by">
-                                                <label>Сортировать по: </label>
-                                                <select>
-                                                    <option value="">Most recent</option>
-                                                    <option value="">Price: Rs Low to High</option>
-                                                    <option value="">Price: Rs High to Low</option>
-                                                </select>
-                                            </div>
-                                        </div>
+<!--                                        <div class="sort">-->
+<!--                                            <div class="sort-by">-->
+<!--                                                <label>Сортировать по: </label>-->
+<!--                                                <select>-->
+<!--                                                    <option value="">Most recent</option>-->
+<!--                                                    <option value="">Price: Rs Low to High</option>-->
+<!--                                                    <option value="">Price: Rs High to Low</option>-->
+<!--                                                </select>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
                                         <div class="clearfix"></div>
                                         <ul class="list">
                                             <?php foreach ($articles as $article): ?>
-                                            <a href="single.html">
+                                            <a href="<?php echo "/article/detail-".$article['id']; ?>">
                                                 <li>
                                                     <img src="<?php echo $article['image']; ?>" title="" alt="" />
                                                     <section class="list-left">
