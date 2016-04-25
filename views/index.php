@@ -28,7 +28,7 @@
                         <?php foreach ($articles as $article): ?>
 
                             <div class="col-md-3 biseller-column">
-                                <a href="single.html">
+                                <a href="<?php echo "/article/detail-".$article['id']; ?>">
                                     <img src="<?php echo $article['image']; ?>"/>
                                     <span class="price">&#36;<?php echo $article['price']; ?></span>
                                 </a>

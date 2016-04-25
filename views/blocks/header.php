@@ -35,7 +35,13 @@
             <a href="/">Will<span>Sell</span>All</a>
         </div>
         <div class="header-right">
-            <a class="account" href="user/login">Мой кабинет</a>
+            <?php if(isset($isLogged) && $isLogged == true): ?>
+            <a class="account" href="/article/category-0/" >Мой кабинет</a>
+            <span class="active uls-trigger"><a href="/user/logout/">Выход</a></span>
+            <?php endif; ?>
+            <?php if(isset($isLogged) && $isLogged == false): ?>
+                <a class="account" href="/user/login/" >Вход</a>
+            <?php endif; ?>
         </div>
     </div>
 </div>

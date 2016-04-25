@@ -56,7 +56,7 @@ class UserController
             }
         }
 
-
+        View::userControl($view);
         $view->assign("hide_baner", true);
         $view->display('register.php');
         return true;
@@ -84,6 +84,7 @@ class UserController
             }
         }
         $view = new View();
+        View::userControl($view);
         $view->assign("email", $email);
         $view->assign("password", $password);
         $view->assign("errors", $errors);
@@ -92,6 +93,10 @@ class UserController
     }
 
     public function actionLogout(){
+        User::logout();
         return true;
     }
+
+
+
 }

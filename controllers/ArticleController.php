@@ -16,6 +16,7 @@ class ArticleController
         $author = User::getOneById(intval($article['author']));
         $tags = Tag::getAllByArticleId($id);
         $view = new View();
+        View::userControl($view);
         $view->assign('tags',$tags);
         $view->assign('author', $author);
         $view->assign('article', $article);
@@ -27,6 +28,7 @@ class ArticleController
         $articles = Article::getAllByCategory(0, $page);
         $categories = Category::getAll();
         $view = new View();
+        View::userControl($view);
         $view->assign('is_category', 0);
         $view->assign('categories', $categories);
         $view->assign('articles', $articles);
@@ -38,6 +40,7 @@ class ArticleController
         $articles = Article::getAllByCategory($categoryId, $page);
         $categories = Category::getAll();
         $view = new View();
+        View::userControl($view);
         $view->assign('is_category', $categoryId);
         $view->assign('categories', $categories);
         $view->assign('articles', $articles);
@@ -56,12 +59,23 @@ class ArticleController
         $articles = Article::getAll($page = 1);
         $categories = Category::getAll();
         $view = new View();
+        View::userControl($view);
         $view->assign('main_banner', true);
         $view->assign('categories', $categories);
         $view->assign('articles', $articles);
         $view->display("index.php");
         return true;
     }
+
+    public function actionAdd(){
+        $view = new View();
+        $categories = Category::getAll();
+        View::userControl($view);
+        $view->assign('categories', $categories);
+        $view->display('add_article.php');
+        return true;
+    }
+
 
 
 }
