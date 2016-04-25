@@ -2,6 +2,8 @@
 
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/models/User.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/models/Tag.php';
+
 class Article
 {
     //getOneById
@@ -97,10 +99,30 @@ class Article
             $articleItems[$i]['status'] = $row['status'];
             $articleItems[$i]['price'] = $row['price'];
             $articleItems[$i]['image'] = $row['image'];
+            $articleItems[$i]['date'] = $row['date'];
             $i++;
 
         }
         return $articleItems;
+    }
+
+    public static function addArticle($authorId, $title, $text, $category, $count = 0, $price =0, $image = '', $tag=''){
+        $status = 1; //do not published
+        $db = Db::getConnection();
+        $sql = 'INSERT INTO article(author, title, text, price, status, image, count) VALUES (
+                :author, :title, :text, :price, :status, :image, :count)';
+        $result = $db->prepare($sql);
+        $result->bindParam(':author', $authorId, PDO::PARAM_INT);
+        $result->bindParam(':title', $title, PDO::PARAM_STR);
+        $result->bindParam(':text', $text, PDO::PARAM_STR);
+        $result->bindParam(':count', $count, PDO::PARAM_INT);
+        $result->bindParam(':price', $price, PDO::PARAM_INT);
+        $result->bindParam(':image', $image, PDO::PARAM_STR);
+        $result->bindParam(':status', $status, PDO::PARAM_INT);
+        if($result->execute()){
+            return Tag::addTag($tag, $db->lastInsertId(), $category);
+        }
+        return false;
     }
 
 }

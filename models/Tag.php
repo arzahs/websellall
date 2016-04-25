@@ -34,4 +34,14 @@ class Tag
         }
         return $tagItems;
     }
+
+    public static function addTag($name, $article_id, $category_id){
+        $db = Db::getConnection();
+        $sql = 'INSERT INTO tag(name, article_id, category_id) VALUES(:name, :article_id, :category_id)';
+        $result = $db->prepare($sql);
+        $result->bindParam(':name', $name, PDO::PARAM_STR);
+        $result->bindParam(':article_id', $article_id, PDO::PARAM_INT);
+        $result->bindParam(':category_id', $category_id, PDO::PARAM_INT);
+        return $result->execute();
+    }
 }

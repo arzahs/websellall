@@ -34,7 +34,7 @@
                                 </a>
                                 <div class="ad-info">
                                     <h5><?php echo $article['title']; ?></h5>
-                                    <span>3 hour ago</span>
+                                    <span><?php echo $article['date']; ?></span>
                                 </div>
                             </div>
 

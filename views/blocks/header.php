@@ -50,7 +50,12 @@
     <div class="container">
         <h1>Продавай или покупай   <span class="segment-heading">  все online </span> вместе WillSellAll</h1>
         <p>Бесплатные online объявления на WillSellAll.com - здесь вы найдете то, что искали</p>
-        <a href="post-ad.html">Создать бесплатное объявление</a>
+        <?php if(isset($isLogged) && $isLogged == true): ?>
+            <a href="/article/add/">Создать бесплатное объявление</a>
+        <?php endif; ?>
+        <?php if(isset($isLogged) && $isLogged == false): ?>
+            <a href="/user/login/">Создать бесплатное объявление</a>
+        <?php endif; ?>
     </div>
 </div>
 <?php endif ?>
