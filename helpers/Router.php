@@ -29,6 +29,7 @@ class Router
                 $methodName = "action".ucfirst(array_shift($segments));
                 //подключаю нужный файл контроллера
                 $parameter = $segments;
+//
                 $fileController = $_SERVER["DOCUMENT_ROOT"]."/controllers/".$controllerName.".php";
                 if(file_exists($fileController)){
                     include_once($fileController);

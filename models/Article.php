@@ -50,6 +50,28 @@ class Article
 
     }
 
+    public static function getCountAllByCategory($categoryId = 0, $city_id = 0){
+        $db = Db::getConnection();
+        if($categoryId == 0 and $city_id == 0){
+            $query = 'SELECT COUNT(*)
+                      FROM article ORDER BY id';
+        }
+        else if($categoryId == 0 and $city_id != 0){
+            $query = 'SELECT COUNT(*)
+                      FROM article WHERE article.city_id='.$city_id.' ORDER BY id';
+        }
+        else{
+            $query = 'SELECT COUNT(article.id) FROM article, category, tag
+            WHERE category.id='.$categoryId.' AND article.id=tag.article_id AND category.id = tag.category_id AND article.city_id = '.$city_id.'
+            ORDER BY article.id';
+        }
+        $result = $db->query($query);
+        $count = $result->fetch(PDO::FETCH_NUM);
+        return intval($count[0]);
+    }
+
+
+
     //getAllByCategory
     public static function getAllByCategory($categoryId = 0, $page = 1, $city_id = 0){
         $categoryId = intval($categoryId);

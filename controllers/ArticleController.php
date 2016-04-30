@@ -43,8 +43,12 @@ class ArticleController
         $articles = Article::getAllByCategory($categoryId, $page, $city_id);
         $categories = Category::getAll();
         $view = new View();
+        $countItems = Article::getCountAllByCategory($categoryId, $city_id);
+        $numberPages = intval(ceil($countItems/intval(SHOW_BY_DEFAULT)));
         View::userControl($view);
         $cities = City::getAll();
+        $view->assign("page", $page);
+        $view->assign('countPages', $numberPages);
         $view->assign('is_city', $city_id);
         $view->assign('cities', $cities);
         $view->assign('is_category', $categoryId);
