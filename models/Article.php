@@ -61,7 +61,7 @@ class Article
                       FROM article ORDER BY id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset;
         }
         else{
-            $query = 'SELECT article.id, article.title, article.author, article.text, article.image, article.status, article.price, article.date FROM article, category, tag
+            $query = 'SELECT article.id, article.title, article.author, article.text, article.image, article.status, article.price, article.date, article.city_id FROM article, category, tag
             WHERE category.id='.$categoryId.' AND article.id=tag.article_id AND category.id = tag.category_id
             ORDER BY article.id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset;
         }
@@ -77,6 +77,7 @@ class Article
             $articleItems[$i]['price'] = $row['price'];
             $articleItems[$i]['image'] = $row['image'];
             $articleItems[$i]['date'] = $row['date'];
+            $articleItems[$i]['city_id'] = $row['city_id'];
             $i++;
 
         }
@@ -100,17 +101,19 @@ class Article
             $articleItems[$i]['price'] = $row['price'];
             $articleItems[$i]['image'] = $row['image'];
             $articleItems[$i]['date'] = $row['date'];
+            $articleItems[$i]['city_id'] = $row['city_id'];
             $i++;
 
         }
         return $articleItems;
     }
 
-    public static function addArticle($authorId, $title, $text, $category, $count = 0, $price =0, $image = '', $tag=''){
+    public static function addArticle($authorId, $title, $text, $category, $count = 0, $price =0, $city = 0, $image = '', $tag=''){
         $status = 1; //do not published
         $db = Db::getConnection();
-        $sql = 'INSERT INTO article(author, title, text, price, status, image, count) VALUES (
-                :author, :title, :text, :price, :status, :image, :count)';
+        $db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+        $sql = 'INSERT INTO article(author, title, text, price, status, image, count, city_id) VALUES (
+                :author, :title, :text, :price, :status, :image, :count, :city_id)';
         $result = $db->prepare($sql);
         $result->bindParam(':author', $authorId, PDO::PARAM_INT);
         $result->bindParam(':title', $title, PDO::PARAM_STR);
@@ -119,6 +122,7 @@ class Article
         $result->bindParam(':price', $price, PDO::PARAM_INT);
         $result->bindParam(':image', $image, PDO::PARAM_STR);
         $result->bindParam(':status', $status, PDO::PARAM_INT);
+        $result->bindParam(':city_id', $city, PDO::PARAM_INT);
         if($result->execute()){
             return Tag::addTag($tag, $db->lastInsertId(), $category);
         }

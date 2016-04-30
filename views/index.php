@@ -24,9 +24,8 @@
                 <div class="trend-ads">
                     <h2>Последние объявления</h2>
                     <ul id="flexiselDemo3">
-                        <li>
-                        <?php foreach ($articles as $article): ?>
-
+                        <?php foreach ($articles as $key => $article): ?>
+                        <?php if ($key==0): ?><li><?php endif?>
                             <div class="col-md-3 biseller-column">
                                 <a href="<?php echo "/article/detail-".$article['id']; ?>">
                                     <img src="<?php echo $article['image']; ?>"/>
@@ -37,10 +36,9 @@
                                     <span><?php echo $article['date']; ?></span>
                                 </div>
                             </div>
-
+                        <?php if (($key+1)%4==0): ?></li><li><?php endif?>
 
                         <?php endforeach; ?>
-                        </li>
                     </ul>
                     <script type="text/javascript">
                         $(window).load(function() {

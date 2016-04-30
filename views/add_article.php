@@ -16,6 +16,14 @@
                     <?php endforeach; ?>
                 </select>
                 <div class="clearfix"></div>
+                <label>Выбрать город</label>
+                <select name="city" class="">
+                    <option value="0">Все</option>
+                    <?php foreach($cities as $city): ?>
+                        <option value="<?php echo $city['id']; ?>"><?php echo $city['name'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <div class="clearfix"></div>
                 <label>Заголовок <span>*</span></label>
                 <input type="text" class="phone" name="title" placeholder="" required>
                 <div class="clearfix"></div>
