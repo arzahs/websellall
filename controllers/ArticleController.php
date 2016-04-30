@@ -37,11 +37,16 @@ class ArticleController
         return true;
     }
 
-    public function actionCategory($categoryId = 0, $page = 1){
-        $articles = Article::getAllByCategory($categoryId, $page);
+    public function actionCategory($categoryId = 0,  $city_id=0, $page = 1){
+        $userId = User::checkUserLogged();
+//        $is_city = User::getCityById($userId);
+        $articles = Article::getAllByCategory($categoryId, $page, $city_id);
         $categories = Category::getAll();
         $view = new View();
         View::userControl($view);
+        $cities = City::getAll();
+        $view->assign('is_city', $city_id);
+        $view->assign('cities', $cities);
         $view->assign('is_category', $categoryId);
         $view->assign('categories', $categories);
         $view->assign('articles', $articles);

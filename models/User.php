@@ -40,6 +40,21 @@ class User
         return $user['first_name']." ".$user['last_name'];
     }
 
+    static function updateCity($idUser, $idCity){
+        $db = Db::getConnection();
+        $sql = 'UPDATE user SET city_id=:city_id WHERE id=:id';
+        $result = $db->prepare($sql);
+        $result->bindParam(':city_id', $idCity, PDO::PARAM_INT);
+        $result->bindParam(':id', $idUser, PDO::PARAM_INT);
+        return $result->execute();
+    }
+    public static function getCityById($userId){
+        $db = Db::getConnection();
+        $result = $db->query("SELECT city_id FROM user WHERE id=".$id);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $cityItem = $result->fetch();
+        return $cityItem['city_id'];
+    }
 
 
     public static function register($firstName, $lastName, $password, $email, $phone){

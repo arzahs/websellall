@@ -22,7 +22,6 @@ class Article
 
     }
     //getAllByTag
-
     public static function getAllByTag($tagId, $page = 1){
         //$tagId = intval($tagId);
         $offset = ($page-1)*SHOW_BY_DEFAULT;
@@ -52,17 +51,21 @@ class Article
     }
 
     //getAllByCategory
-    public static function getAllByCategory($categoryId = 0, $page = 1){
+    public static function getAllByCategory($categoryId = 0, $page = 1, $city_id = 0){
         $categoryId = intval($categoryId);
         $offset = ($page-1)*SHOW_BY_DEFAULT;
         $db = Db::getConnection();
-        if($categoryId == 0){
+        if($categoryId == 0 and $city_id == 0){
             $query = 'SELECT *
                       FROM article ORDER BY id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset;
         }
+        else if($categoryId == 0 and $city_id != 0){
+            $query = 'SELECT *
+                      FROM article WHERE article.city_id='.$city_id.' ORDER BY id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset;
+        }
         else{
             $query = 'SELECT article.id, article.title, article.author, article.text, article.image, article.status, article.price, article.date, article.city_id FROM article, category, tag
-            WHERE category.id='.$categoryId.' AND article.id=tag.article_id AND category.id = tag.category_id
+            WHERE category.id='.$categoryId.' AND article.id=tag.article_id AND category.id = tag.category_id AND article.city_id = '.$city_id.'
             ORDER BY article.id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset;
         }
         $result = $db->query($query);

@@ -1,16 +1,64 @@
 <?php require $_SERVER["DOCUMENT_ROOT"]."/views/blocks/header.php" ?>
+
+
 <div class="total-ads main-grid-border">
     <div class="container">
-        <div class="all-categories" style="margin-top: 20px;">
-            <h3>Выбери свою категория и найди лучшее объявление</h3>
-            <ul class="all-cat-list">
-                <li><a <?php if ($is_category == 0){ echo 'class="active"'; } ?> href="<?php echo '/article/category-0'?>">Все<span class="num-of-ads"></span></a></li>
+        <div class="select-box">
+            <div class="select-city-for-local-ads ads-list">
+                <label>Выберите свой город</label>
+                <select id="citySelect">
 
-                <?php foreach ($categories as $category): ?>
-                <li><a <?php if ($is_category == $category['id']){ echo 'class="active"'; } ?> href="<?php echo '/article/category-'.$category['id'] ?>"><?php echo $category['name'] ?><span class="num-of-ads"></span></a></li>
-                <?php endforeach; ?>
-            </ul>
+
+                    <option <?php if ($is_city == 0){ echo 'selected'; } ?> value="<?php echo '/article/category-'.$is_category ?>" >Все</option>
+                    <?php foreach ($cities as $city): ?>
+                    <option value="<?php echo '/article/category-'.$is_category.'/city-'.$city['id'] ?>"
+
+                        <?php if ($is_city == $city['id']){ echo 'selected'; } ?> >
+
+                        <?php echo $city['name'] ?>
+
+
+                        </option>
+                    <?php endforeach; ?>
+
+
+                </select>
+            </div>
+            <div class="browse-category ads-list">
+                <label>Выберите категорию</label>
+                <select id="categorySelect">
+                    <option <?php if ($is_category == 0){ echo 'selected'; } ?> value="<?php echo '/article/category-0' ?>">Все</option>
+                    <?php foreach ($categories as $category): ?>
+                        <option value="<?php echo '/article/category-'.$category['id'] ?>" <?php if ($is_category == $category['id']){ echo 'selected'; } ?>><?php echo $category['name'] ?></option>
+                    <?php endforeach; ?>
+
+                </select>
+            </div>
+            <script>
+                $('#categorySelect').on('change', function(elm){
+                    console.log('click');
+                    window.location.href = this.value;
+                });
+
+                $('#citySelect').on('change', function(elm){
+                    console.log('click');
+                    window.location.href = this.value;
+                });
+            </script>
+
+            <div class="clearfix"></div>
         </div>
+
+<!--        <div class="all-categories" style="margin-top: 20px;">-->
+<!--            <h3>Выбери свою категория и найди лучшее объявление</h3>-->
+<!--            <ul class="all-cat-list">-->
+<!--                <li><a --><?php //if ($is_category == 0){ echo 'class="active"'; } ?><!-- href="--><?php //echo '/article/category-0'?><!--">Все<span class="num-of-ads"></span></a></li>-->
+<!---->
+<!--                --><?php //foreach ($categories as $category): ?>
+<!--                <li><a --><?php //if ($is_category == $category['id']){ echo 'class="active"'; } ?><!-- href="--><?php //echo '/article/category-'.$category['id'] ?><!--">--><?php //echo $category['name'] ?><!--<span class="num-of-ads"></span></a></li>-->
+<!--                --><?php //endforeach; ?>
+<!--            </ul>-->
+<!--        </div>-->
         <ol class="breadcrumb" style="margin-bottom: 5px;">
             <li><a href="index.html">Home</a></li>
             <li class="active">All Ads</li>
