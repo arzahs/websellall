@@ -17,9 +17,6 @@ class Article
             //$newsItem["category"] = Category::getById($newsItem["news_category_id"]);
             return $newsItem;
         }
-
-
-
     }
 
     public static function getAllByUser($userId=0, $page=1){
@@ -86,15 +83,15 @@ class Article
         $db = Db::getConnection();
         if($categoryId == 0 and $city_id == 0){
             $query = 'SELECT COUNT(*)
-                      FROM article ORDER BY id';
+                      FROM article WHERE article.status = 1 ORDER BY id';
         }
         else if($categoryId == 0 and $city_id != 0){
             $query = 'SELECT COUNT(*)
-                      FROM article WHERE article.city_id='.$city_id.' ORDER BY id';
+                      FROM article WHERE article.status = 1 AND article.city_id='.$city_id.' ORDER BY id';
         }
         else{
             $query = 'SELECT COUNT(article.id) FROM article, category, tag
-            WHERE category.id='.$categoryId.' AND article.id=tag.article_id AND category.id = tag.category_id AND article.city_id = '.$city_id.'
+            WHERE category.id='.$categoryId.' AND article.id=tag.article_id AND article.status = 1 AND category.id = tag.category_id AND article.city_id = '.$city_id.'
             ORDER BY article.id';
         }
         $result = $db->query($query);
@@ -111,15 +108,15 @@ class Article
         $db = Db::getConnection();
         if($categoryId == 0 and $city_id == 0){
             $query = 'SELECT *
-                      FROM article ORDER BY id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset;
+                      FROM article WHERE article.status = 1 ORDER BY id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset;
         }
         else if($categoryId == 0 and $city_id != 0){
             $query = 'SELECT *
-                      FROM article WHERE article.city_id='.$city_id.' ORDER BY id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset;
+                      FROM article WHERE  article.status = 1 AND article.city_id='.$city_id.' ORDER BY id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset;
         }
         else{
             $query = 'SELECT article.id, article.title, article.author, article.text, article.image, article.status, article.price, article.date, article.city_id FROM article, category, tag
-            WHERE category.id='.$categoryId.' AND article.id=tag.article_id AND category.id = tag.category_id AND article.city_id = '.$city_id.'
+            WHERE category.id='.$categoryId.' AND article.id=tag.article_id AND article.status = 1 AND category.id = tag.category_id AND article.city_id = '.$city_id.'
             ORDER BY article.id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset;
         }
         $result = $db->query($query);
@@ -184,6 +181,17 @@ class Article
             return Tag::addTag($tag, $db->lastInsertId(), $category);
         }
         return false;
+    }
+
+    public static function updateStatus($id, $status){
+        $db = Db::getConnection();
+        $id = intval($id);
+        $status = intval($status);
+        $sql = 'UPDATE article SET status=:status WHERE id=:id';
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':status', $status, PDO::PARAM_INT);
+        return $result->execute();
     }
 
 }

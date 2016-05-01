@@ -59,6 +59,17 @@
                                                 </section>
                                                 <section class="list-right">
                                                     <span class="date"><?php echo $article['date']; ?></span>
+                                                    <?php if ($article['status']==1): ?>
+                                                        <span class="label label-success">Опубликован</span>
+                                                        <span data-page="<?php echo $page ?>"
+                                                            data-id="<?php echo $article['id'] ?>" data-status='3' class="label label-danger" onclick="return Status.changeIt(event,this);">Окончить продажу</span>
+                                                    <?php endif ?>
+                                                    <?php if ($article['status']==2): ?>
+                                                        <span class="label label-warning">Не опубликовано</span>
+                                                    <?php endif ?>
+                                                    <?php if ($article['status']==3): ?>
+                                                        <span class="label label-danger">Продано</span>
+                                                    <?php endif ?>
                                                 </section>
                                                 <div class="clearfix"></div>
                                             </li>

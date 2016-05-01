@@ -27,6 +27,7 @@
     <script src="/static/js/jquery.uls.languagefilter.js"></script>
     <script src="/static/js/jquery.uls.regionfilter.js"></script>
     <script src="/static/js/jquery.uls.core.js"></script>
+    <script src="/static/js/script.js"></script>
 </head>
 <body>
 <div class="header">
@@ -36,7 +37,7 @@
         </div>
         <div class="header-right">
             <?php if(isset($isLogged) && $isLogged == true): ?>
-            <a class="account" href="/article/category-0/" >Мой кабинет</a>
+            <a class="account" href="/article/my/" >Мой кабинет</a>
             <span class="active uls-trigger"><a href="/user/logout/">Выход</a></span>
             <?php endif; ?>
             <?php if(isset($isLogged) && $isLogged == false): ?>

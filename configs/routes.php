@@ -12,5 +12,6 @@ return array(
     'article/add' => 'article/add',
     'article/my/page-([0-9]+)' => 'article/my/$1',
     'article/my' => 'article/my',
+    'article/status' => 'article/status',
     '' => 'article/index',
 );

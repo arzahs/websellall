@@ -174,5 +174,27 @@ class ArticleController
         return true;
     }
 
+    static function actionStatus(){
+        $id = $_POST['id'];
+        $status =$_POST['status'];
+        $page = $_POST['page'];
+        $userId = User::checkUserLogged();
+        if(User::isAdmin($userId)){
+            $article = Article::updateStatus($id, $status);
+
+        }else{
+            $articles = Article::getAllByUser($userId, $page);
+            foreach($articles as $art){
+                if(intval($art['id'])==intval($id)){
+                    $article = Article::updateStatus($id, $status);
+                }
+            }
+        }
+        $return = $_POST;
+        $return["json"] = json_encode($return);
+        echo json_encode($return);
+        return true;
+    }
+
 
 }
