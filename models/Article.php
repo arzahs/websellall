@@ -21,6 +21,38 @@ class Article
 
 
     }
+
+    public static function getAllByUser($userId=0, $page=1){
+        $offset = ($page-1)*SHOW_BY_DEFAULT;
+        $db = Db::getConnection();
+        $query = 'SELECT * FROM article WHERE author='.$userId.' ORDER BY id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset;
+        $result = $db->query($query);
+        $i = 0;
+        while($row=$result->fetch()){
+            $articleItems[$i]['id'] = $row['id'];
+            $articleItems[$i]['title'] = $row['title'];
+            $articleItems[$i]['author'] = $row['author'];
+            $articleItems[$i]['price'] = $row['price'];
+            $articleItems[$i]['text'] = $row['text'];
+            $articleItems[$i]['status'] = $row['status'];
+            $articleItems[$i]['image'] = $row['image'];
+            $articleItems[$i]['date'] = $row['date'];
+            $i++;
+
+        }
+        return $articleItems;
+
+    }
+
+    public static function getCountByUser($userId=0){
+        $db = Db::getConnection();
+        $query = 'SELECT COUNT(*) FROM article WHERE author='.$userId;
+        $result = $db->query($query);
+        $count = $result->fetch(PDO::FETCH_NUM);
+        return intval($count[0]);
+
+    }
+
     //getAllByTag
     public static function getAllByTag($tagId, $page = 1){
         //$tagId = intval($tagId);

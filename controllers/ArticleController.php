@@ -154,5 +154,25 @@ class ArticleController
     }
 
 
+    static function actionMy($page = 1){
+        $userId = User::checkUserLogged();
+        if(!$userId){
+            header('Location: /user/login/');
+        }
+        $user = User::getOneById($userId);
+        $countItems = Article::getCountByUser($userId);
+        $numberPages = intval(ceil($countItems/intval(SHOW_BY_DEFAULT)));
+        $view = new View();
+        View::userControl($view);
+        $articles = Article::getAllByUser($userId, $page);
+        $view->assign('page', $page);
+        $view->assign('countPages', $numberPages);
+        $view->assign('articles', $articles);
+        $view->assign('main_banner', false);
+        $view->assign('user', $user);
+        $view->display('user_page.php');
+        return true;
+    }
+
 
 }

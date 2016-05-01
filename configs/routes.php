@@ -10,5 +10,7 @@ return array(
     'article/tag-([0-9]+)' => 'article/tag/$1',
     'article/all' => 'article/all',
     'article/add' => 'article/add',
+    'article/my/page-([0-9]+)' => 'article/my/$1',
+    'article/my' => 'article/my',
     '' => 'article/index',
 );
