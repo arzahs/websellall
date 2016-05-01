@@ -2,15 +2,25 @@
     <div class="single-page main-grid-border">
         <div class="container">
             <ol class="breadcrumb" style="margin-bottom: 5px;">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="all-classifieds.html">All Ads</a></li>
-                <li class="active"><a href="mobiles.html">Mobiles</a></li>
-                <li class="active">Mobile Phone</li>
+                <li><a href="/">Главная</a></li>
+                <?php if ($article['city_id'] != 0): ?>
+                    <li><a href="<?php echo '/article/category-0/city-'.$article['city_id'] ?>"><?php echo $city['name'] ?></a></li>
+<!--                --><?php //if ($article['category'] != 0 ): ?>
+<!--                   <li><a href="--><?php //echo '/article/category-'.$category ?><!--">--><?php //echo $city ?><!--</a></li>-->
+                <?php else: ?>
+                    <li class="active"><a href="/article/category-0/city-0">Все</a></li>
+                <?php endif ?>
+                <?php if (isset($category)): ?>
+                    <li><a href="<?php echo '/article/category-'.$category['id'] ?>"><?php echo $category['name'] ?></a></li>
+                <?php endif ?>
+                <li class="active"><?php echo $article['id'] ?></li>
+
             </ol>
             <div class="product-desc">
                 <div class="col-md-7 product-view">
                     <h2><?php echo $article['title'] ?></h2>
-                    <p>Добавлено <?php echo $article['date'] ?>, ID объявления: <?php echo $article['id'] ?></p>
+                    <p><?php if ($article['city_id']!=0): ?><i class="glyphicon glyphicon-map-marker"></i><a
+                            href="<?php echo '/article/category-0/city-'.$article['city_id'] ?>"><?php echo $city['name'] ?></a> | <?php endif?>Добавлено <?php echo $article['date'] ?>, ID объявления: <?php echo $article['id'] ?></p>
                     <div class="flexslider">
                         <ul class="slides">
                             <li data-thumb="<?php echo $article['image'] ?>">

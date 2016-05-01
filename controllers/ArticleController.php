@@ -1,6 +1,5 @@
 <?php
 
-
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/Article.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/models/Category.php';
 include_once $_SERVER['DOCUMENT_ROOT']."/models/Tag.php";
@@ -15,9 +14,13 @@ class ArticleController
     public function actionOne($id = 1){
         $article = Article::getOneById($id);
         $author = User::getOneById(intval($article['author']));
+        $city = City::getOneById($article['city_id']);
         $tags = Tag::getAllByArticleId($id);
+        $category = Category::getOneById($tags[0]['category_id']);
         $view = new View();
         View::userControl($view);
+        $view->assign('category', $category);
+        $view->assign('city', $city);
         $view->assign('tags',$tags);
         $view->assign('author', $author);
         $view->assign('article', $article);

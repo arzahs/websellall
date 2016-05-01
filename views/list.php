@@ -27,9 +27,9 @@
             <div class="browse-category ads-list">
                 <label>Выберите категорию</label>
                 <select id="categorySelect">
-                    <option <?php if ($is_category == 0){ echo 'selected'; } ?> value="<?php echo '/article/category-0' ?>">Все</option>
+                    <option <?php if ($is_category == 0){ echo 'selected'; } ?> value="<?php echo '/article/category-0'.'/city-'.$is_city ?>">Все</option>
                     <?php foreach ($categories as $category): ?>
-                        <option value="<?php echo '/article/category-'.$category['id'] ?>" <?php if ($is_category == $category['id']){ echo 'selected'; } ?>><?php echo $category['name'] ?></option>
+                        <option value="<?php echo '/article/category-'.$category['id'].'/city-'.$is_city ?>" <?php if ($is_category == $category['id']){ echo 'selected'; } ?>><?php echo $category['name'] ?></option>
                     <?php endforeach; ?>
 
                 </select>
@@ -60,8 +60,15 @@
 <!--            </ul>-->
 <!--        </div>-->
         <ol class="breadcrumb" style="margin-bottom: 5px;">
-            <li><a href="index.html">Home</a></li>
-            <li class="active">All Ads</li>
+            <li><a href="/">Главная</a></li>
+            <?php if ($is_category != 0): ?>
+                <li><a href="<?php echo '/article/category-0/city-'.$is_city ?>">Все</a></li>
+            <li class="active"><?php echo $categories[$is_category-1]['name'] ?></li>
+            <?php else: ?>
+                <li class="active">Все</li>
+            <?php endif ?>
+
+
         </ol>
         <div class="ads-grid">
             <div class="ads-display col-md-12">

@@ -12,6 +12,7 @@ class Tag
         while($row=$result->fetch()){
             $tagItems[$i]['id'] = $row['id'];
             $tagItems[$i]['name'] = $row['name'];
+            $tagItems[$i]['category_id'] = $row['category_id'];
             $i++;
 
         }
@@ -29,6 +30,7 @@ class Tag
         while($row=$result->fetch()){
             $tagItems[$i]['id'] = $row['id'];
             $tagItems[$i]['name'] = $row['name'];
+            $tagItems[$i]['category_id'] = $row['category_id'];
             $i++;
 
         }
