@@ -14,6 +14,7 @@ class User
             $userItems[$i]['id'] = $row['id'];
             $userItems[$i]['first_name'] = $row['first_name'];
             $userItems[$i]['last_name'] = $row['last_name'];
+            $userItems[$i]['name'] = $row['first_name'].' '.$row['last_name'];
             $userItems[$i]['email'] = $row['email'];
             $userItems[$i]['is_admin'] = $row['is_admin'];
             $i++;
@@ -21,6 +22,26 @@ class User
         }
         return $userItems;
     }
+    static function getCountAll(){
+
+        $db = Db::getConnection();
+        $result = $db->query('SELECT COUNT(*) FROM user');
+        $count = $result->fetch(PDO::FETCH_NUM);
+        return intval($count[0]);
+
+    }
+
+    public static function updateStatus($id, $status){
+        $db = Db::getConnection();
+        $id = intval($id);
+        $status = intval($status);
+        $sql = 'UPDATE user SET is_admin=:status WHERE id=:id';
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':status', $status, PDO::PARAM_INT);
+        return $result->execute();
+    }
+
     #getOnebyId()
     static function getOneById($id = 1){
         $id = intval($id);

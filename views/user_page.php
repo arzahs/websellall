@@ -34,7 +34,9 @@
         </div>
         <?php if(isset($isAdmin)): ?>
         <br>
-        <p><a class="btn btn-danger" href="/admin/ads/">Админ-контроль</a></p>
+        <p><a class="btn btn-danger" href="/admin/ads/">Контроль объявлний</a></p>
+        <br>
+         <p><a class="btn btn-danger" href="/admin/users/">Контроль пользователей</a></p>
         <?php endif; ?>
     </div>
 

@@ -125,7 +125,26 @@ Status = {
         //    },
         //    'json');
         //}
+    },
+    adminControl: function(evnt, obj) {
+        evnt.preventDefault();
+        var id = $(obj).data('id');
+        var status = $(obj).data('status');
+        var page = $(obj).data('page');
+        var data = {'id': id, 'status': status, 'page': page};
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "/admin/status/", //Relative or absolute path to response.php file
+            data: data,
+            success: function() {
+                alert('Cтатус изменен успешно');
+                location.reload(true);
+            }
+        });
+        return false;
     }
+
 
 };
 

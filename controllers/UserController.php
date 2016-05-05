@@ -4,6 +4,43 @@ include_once $_SERVER['DOCUMENT_ROOT']."/models/User.php";
 
 class UserController
 {
+    public function actionList($page = 1){
+        $userId = User::checkUserLogged();
+        if(!$userId){
+            header('Location: /user/login/');
+        }
+        $users = User::getAll($page);
+        $countUsers = User::getCountAll();
+        $numberPages = intval(ceil($countUsers/intval(SHOW_BY_DEFAULT)));
+        $user = User::getOneById($userId);
+        $view = new View();
+        View::userControl($view);
+        $view->assign('page', $page);
+        $view->assign('countPages', $numberPages);
+        $view->assign('user', $user);
+        $view->assign('users', $users);
+        $view->display('admin_users.php');
+        return true;
+    }
+
+    public function actionStatus(){
+        $id = $_POST['id'];
+        $status =$_POST['status'];
+        $page = $_POST['page'];
+        $userId = User::checkUserLogged();
+        if(User::isAdmin($userId)){
+            $user = User::updateStatus($id, $status);
+
+        }else{
+            header('Location: /');
+        }
+        $return = $_POST;
+        $return["json"] = json_encode($return);
+        echo json_encode($return);
+        return true;
+    }
+
+
     public function actionRegister(){
         $view = new View();
         $firstName = "";
@@ -97,9 +134,7 @@ class UserController
         return true;
     }
 
-    public function actionList($page){
 
-    }
 
 
 
