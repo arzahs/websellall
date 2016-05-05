@@ -13,20 +13,11 @@
     <!--//fonts-->
     <!-- js -->
     <script type="text/javascript" src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/js/bootstrap-select.js"></script>
-    <script type="text/javascript" src="/static/js/jquery.leanModal.min.js"></script>
+    <script src="/static/js/query-script.min.js"></script>
+    <script src="/static/js/query-select.js"></script>
     <link href="/static/css/jquery.uls.css" rel="stylesheet"/>
     <link href="/static/css/jquery.uls.grid.css" rel="stylesheet"/>
     <link href="/static/css/jquery.uls.lcd.css" rel="stylesheet"/>
-
-    <!-- Source -->
-    <script src="/static/js/jquery.uls.data.js"></script>
-    <script src="/static/js/jquery.uls.data.utils.js"></script>
-    <script src="/static/js/jquery.uls.lcd.js"></script>
-    <script src="/static/js/jquery.uls.languagefilter.js"></script>
-    <script src="/static/js/jquery.uls.regionfilter.js"></script>
-    <script src="/static/js/jquery.uls.core.js"></script>
     <script src="/static/js/script.js"></script>
 </head>
 <body>
