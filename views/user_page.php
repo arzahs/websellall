@@ -32,8 +32,10 @@
             <p class="user-inf-title"><b>E-mail:</b></p>
             <p><i class="glyphicon glyphicon-envelope"></i> <?php echo $user['email'] ?></p>
         </div>
-
-
+        <?php if(isset($isAdmin)): ?>
+        <br>
+        <p><a class="btn btn-danger" href="/admin/ads/">Админ-контроль</a></p>
+        <?php endif; ?>
     </div>
 
 

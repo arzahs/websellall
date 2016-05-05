@@ -32,7 +32,8 @@
                     <p class="user-inf-title"><b>E-mail:</b></p>
                     <p><i class="glyphicon glyphicon-envelope"></i> <?php echo $user['email'] ?></p>
                 </div>
-
+                <br>
+                <p><a class="btn btn-danger" href="/article/my/">На свою страницу</a></p>
 
             </div>
 
