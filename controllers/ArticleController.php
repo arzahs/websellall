@@ -196,5 +196,27 @@ class ArticleController
         return true;
     }
 
+    static function actionControl($page=1){
+        $userId = User::checkUserLogged();
+        if(!User::isAdmin($userId)){
+            header('Location: /');
+        }
+        $user = User::getOneById($userId);
+        $status = 2; //unpubliched
+        $articles = Article::getByStatus($status, $page);
+        $countItems = Article::getCountByStatus($userId);
+        $numberPages = intval(ceil($countItems/intval(SHOW_BY_DEFAULT)));
+        $view = new View();
+        View::userControl($view);
+        $view->assign('page', $page);
+        $view->assign('countPages', $numberPages);
+        $view->assign('articles', $articles);
+        $view->assign('main_banner', false);
+        $view->assign('user', $user);
+        $view->display('admin_ads.php');
+        return true;
+
+    }
+
 
 }

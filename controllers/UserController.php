@@ -97,6 +97,10 @@ class UserController
         return true;
     }
 
+    public function actionList($page){
+
+    }
+
 
 
 }

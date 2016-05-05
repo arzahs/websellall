@@ -163,7 +163,7 @@ class Article
     }
 
     public static function addArticle($authorId, $title, $text, $category, $count = 0, $price =0, $city = 0, $image = '', $tag=''){
-        $status = 1; //do not published
+        $status = 2; //do not published
         $db = Db::getConnection();
         $db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
         $sql = 'INSERT INTO article(author, title, text, price, status, image, count, city_id) VALUES (
@@ -194,4 +194,39 @@ class Article
         return $result->execute();
     }
 
+    public static function getByStatus($status, $page=1){
+        $page = intval($page);
+        $db = Db::getConnection();
+        $offset = ($page-1)*SHOW_BY_DEFAULT;
+        $result = $db->query('SELECT *
+                      FROM article WHERE status ='.$status.' ORDER BY id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset);
+        $i =0;
+        while($row=$result->fetch()){
+            $articleItems[$i]['id'] = $row['id'];
+            $articleItems[$i]['title'] = $row['title'];
+            $articleItems[$i]['author'] = $row['author'];
+            $articleItems[$i]['author_name'] = User::getNameById(intval($row['author']));
+            $articleItems[$i]['text'] = $row['text'];
+            $articleItems[$i]['status'] = $row['status'];
+            $articleItems[$i]['price'] = $row['price'];
+            $articleItems[$i]['image'] = $row['image'];
+            $articleItems[$i]['date'] = $row['date'];
+            $articleItems[$i]['city_id'] = $row['city_id'];
+            $i++;
+
+        }
+        return $articleItems;
+    }
+
+
+    public static function getCountByStatus($status, $page=1)
+    {
+        $page = intval($page);
+        $db = Db::getConnection();
+        $offset = ($page - 1) * SHOW_BY_DEFAULT;
+        $result = $db->query('SELECT COUNT(*)
+                      FROM article WHERE status =' . $status);
+        $count = $result->fetch(PDO::FETCH_NUM);
+        return intval($count[0]);
+    }
 }

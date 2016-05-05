@@ -13,5 +13,9 @@ return array(
     'article/my/page-([0-9]+)' => 'article/my/$1',
     'article/my' => 'article/my',
     'article/status' => 'article/status',
+    'admin/user/page-([0-9]+)' => 'user/list/$1',
+    'admin/user' => 'user/list',
+    'admin/ads/page-([0-9]+)' => 'article/control/$1',
+    'admin/ads' => 'article/control',
     '' => 'article/index',
 );
