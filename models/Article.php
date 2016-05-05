@@ -144,7 +144,7 @@ class Article
         $db = Db::getConnection();
         $offset = ($page-1)*SHOW_BY_DEFAULT;
         $result = $db->query('SELECT *
-                      FROM article ORDER BY id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset);
+                      FROM article WHERE status = 1 ORDER BY id DESC LIMIT '.SHOW_BY_DEFAULT.' OFFSET '.$offset);
         $i =0;
         while($row=$result->fetch()){
             $articleItems[$i]['id'] = $row['id'];
