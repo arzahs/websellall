@@ -2,6 +2,6 @@
 return array(
     "host" => "localhost",
     "db" => "willsellall",
-    "user" => "root",
+    "user" => "willsellall",
     "password" => "root"
 );
